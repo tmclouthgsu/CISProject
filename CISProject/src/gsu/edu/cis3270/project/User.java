@@ -14,8 +14,9 @@ public class User {
 	private String secQ;
 	private String secQAnswer;
 	private Boolean isAdmin;
+	private int[] flights;
 
-	public User(String firstName, String lastName, String address, String zip, String state, String username, String password, String email, String SSN, String secQ, String secQAnswer, Boolean isAdmin){
+	public User(String firstName, String lastName, String address, String zip, String state, String username, String password, String email, String SSN, String secQ, String secQAnswer, Boolean isAdmin, int[] flights){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -28,9 +29,10 @@ public class User {
 		this.secQ = secQ;
 		this.secQAnswer = secQAnswer;
 		this.isAdmin = isAdmin;
+		this.flights = flights;
 		
 	}
-	
+
 	/**
 	 * @return the firstName
 	 */
@@ -176,5 +178,19 @@ public class User {
 	 */
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+	
+	/**
+	 * @return the flights
+	 */
+	public int[] getFlights() {
+		return flights;
+	}
+
+	/**
+	 * @param flights the flights to set
+	 */
+	public void setFlights(int[] flights) {
+		this.flights = flights;
 	}
 }
