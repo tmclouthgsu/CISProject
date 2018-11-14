@@ -15,8 +15,15 @@ public class User {
 	private String secQAnswer;
 	private Boolean isAdmin;
 	private int[] flights;
+	
+	public User(){
+		
+	}
 
-	public User(String firstName, String lastName, String address, String zip, String state, String username, String password, String email, String SSN, String secQ, String secQAnswer, Boolean isAdmin, int[] flights){
+	public User(String firstName, String lastName, String address, 
+				String zip, String state, String username, String password, 
+				String email, String SSN, String secQ, String secQAnswer, 
+				Boolean isAdmin, int[] flights){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
