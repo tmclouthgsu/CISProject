@@ -39,6 +39,15 @@ public class User {
 		this.flights = flights;
 		
 	}
+	
+	public boolean matchPassword(String password){
+		if(this.password.matches(password)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 	/**
 	 * @return the firstName

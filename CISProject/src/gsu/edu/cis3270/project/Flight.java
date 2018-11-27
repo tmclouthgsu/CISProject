@@ -8,9 +8,9 @@ public class Flight {
 	private String fromCity;
 	private Date departureTime;
 	private Date arrivalTime;
-	private String[] passengers;
+	private int passengers;
 
-	public Flight(int flightNumber, String toCity, String fromCity, Date departureTime, Date arrivalTime, String[] passengers){
+	public Flight(int flightNumber, String toCity, String fromCity, Date departureTime, Date arrivalTime, int passengers){
 		this.flightNumber = flightNumber;
 		this.toCity = toCity;
 		this.fromCity = fromCity;
@@ -82,13 +82,13 @@ public class Flight {
 	/**
 	 * @return the passengers
 	 */
-	public String[] getPassengers() {
+	public int getPassengers() {
 		return passengers;
 	}
 	/**
 	 * @param passengers the passengers to set
 	 */
-	public void setPassengers(String[] passengers) {
+	public void setPassengers(int passengers) {
 		this.passengers = passengers;
 	}
 }
