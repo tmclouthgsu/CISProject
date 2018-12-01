@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MySQLAccess {
@@ -15,58 +16,7 @@ public class MySQLAccess {
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    public void readDataBase() throws Exception {
-        try {
-            // This will load the MySQL driver, each DB has its own driver
-            //Class.forName("com.mysql.jdbc.Driver");
-            // Setup the connection with the DB
-            connect = DriverManager
-                    .getConnection("jdbc:mysql://localhost/ProjectDB?"
-                            + "user=root&password=password");
-
-            // Statements allow to issue SQL queries to the database
-            statement = connect.createStatement();
-            // Result set get the result of the SQL query
-            resultSet = statement
-                    .executeQuery("select * from ProjectDB.comments");
-            writeResultSet(resultSet);
-
-            // PreparedStatements can use variables and are more efficient
-            preparedStatement = connect
-                    .prepareStatement("insert into  ProjectDB.comments values (default, ?, ?, ?, ? , ?, ?)");
-            // "myuser, webpage, datum, summary, COMMENTS from ProjectDB.comments");
-            // Parameters start with 1
-            preparedStatement.setString(1, "Test");
-            preparedStatement.setString(2, "TestEmail");
-            preparedStatement.setString(3, "TestWebpage");
-            preparedStatement.setDate(4, new java.sql.Date(2009, 12, 11));
-            preparedStatement.setString(5, "TestSummary");
-            preparedStatement.setString(6, "TestComment");
-            preparedStatement.executeUpdate();
-
-            preparedStatement = connect
-                    .prepareStatement("SELECT myuser, webpage, datum, summary, COMMENTS from ProjectDB.comments");
-            resultSet = preparedStatement.executeQuery();
-            writeResultSet(resultSet);
-
-            // Remove again the insert comment
-            preparedStatement = connect
-            .prepareStatement("delete from ProjectDB.comments where myuser= ? ; ");
-            preparedStatement.setString(1, "Test");
-            preparedStatement.executeUpdate();
-
-            resultSet = statement
-            .executeQuery("select * from ProjectDB.comments");
-            writeMetaData(resultSet);
-
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            close();
-        }
-
-    }
-    
+   
     public User getUserFromDB(String username) throws Exception{
 
     	String email = "";
@@ -110,7 +60,7 @@ public class MySQLAccess {
     		close();
     	}
 
-    	if(ssn != 0){
+    	if(email != null){
 
     		logInUser = new User(firstName, lastName, address, 
     				zip, state, password, email, ssn, secQ, secQAnswer,isAdmin);
@@ -152,8 +102,8 @@ public class MySQLAccess {
     	
     	String toCity = "";
     	String fromCity  = "";
-    	Date departureTime = new Date();
-    	Date arrivalTime = new Date();
+    	java.sql.Date departureTime = null;
+    	java.sql.Date arrivalTime = null;
     	int passengers = 0;
     	int flightNumber = 0;
     	Flight currentFlight = new Flight();
@@ -189,6 +139,72 @@ public class MySQLAccess {
     	return currentFlight; 
     	
     }
+
+    public void insertFlightToDB(Flight flight) throws Exception{
+    	
+    	try{
+
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("insert into  ProjectDB.User values (?,?,?,?,?,?)");
+    		preparedStatement.setInt(1, flight.getFlightNumber());
+    		preparedStatement.setString(2, flight.getToCity());
+    		preparedStatement.setString(3, flight.getFromCity());
+    		preparedStatement.setDate(4, flight.getDepartureTime());
+    		preparedStatement.setDate(5, flight.getArrivalTime());
+    		preparedStatement.setInt(6, flight.getPassengers());
+    		preparedStatement.executeUpdate();
+
+    	}catch(Exception e) {
+    		throw e;
+    	}finally {
+    	}   	
+    }
+    
+    public ArrayList<Flight> listFlights(ResultSet rs){
+    	
+    	ArrayList<Flight> flightList = new ArrayList<Flight>();
+    	
+    	try {
+			while (rs.next()){
+				flightList.add(new Flight(resultSet.getInt(1),resultSet.getString(2),
+						resultSet.getString(3),resultSet.getDate(4),
+						resultSet.getDate(5),resultSet.getInt(6)));		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return flightList;
+    	
+    }
+
+    public ArrayList<Flight> searchByToCity(String searchCriteria) throws Exception{
+    	
+    	ArrayList<Flight> results = null;
+    	
+    	try{
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.Flight where TOCITY like ? ; ");
+    		preparedStatement.setString(1, "%" + searchCriteria + "%");
+    		resultSet = preparedStatement.executeQuery();
+    		results = listFlights(resultSet);
+    		
+    	} catch (Exception e) {
+    		throw e;
+    	} finally {
+    		close();
+    	}
+    	
+    	return results;
+    	
+    	
+    	
+    }
+    
     
     private void writeMetaData(ResultSet resultSet) throws SQLException {
         //  Now get some metadata from the database

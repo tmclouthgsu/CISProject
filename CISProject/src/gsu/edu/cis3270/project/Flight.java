@@ -1,17 +1,16 @@
 package gsu.edu.cis3270.project;
-import java.util.Date;
 
 public class Flight {
 	
 	private int flightNumber;
 	private String toCity;
 	private String fromCity;
-	private Date departureTime;
-	private Date arrivalTime;
+	private java.sql.Date departureTime;
+	private java.sql.Date arrivalTime;
 	private int passengers;
 
 	public Flight(int flightNumber, String toCity, String fromCity, 
-			Date departureTime, Date arrivalTime, int passengers){
+			java.sql.Date departureTime, java.sql.Date arrivalTime, int passengers){
 		
 		this.flightNumber = flightNumber;
 		this.toCity = toCity;
@@ -64,25 +63,25 @@ public class Flight {
 	/**
 	 * @return the departureTime
 	 */
-	public Date getDepartureTime() {
+	public java.sql.Date getDepartureTime() {
 		return departureTime;
 	}
 	/**
 	 * @param departureTime the departureTime to set
 	 */
-	public void setDepartureTime(Date departureTime) {
+	public void setDepartureTime(java.sql.Date departureTime) {
 		this.departureTime = departureTime;
 	}
 	/**
 	 * @return the arrivalTime
 	 */
-	public Date getArrivalTime() {
+	public java.sql.Date getArrivalTime() {
 		return arrivalTime;
 	}
 	/**
 	 * @param arrivalTime the arrivalTime to set
 	 */
-	public void setArrivalTime(Date arrivalTime) {
+	public void setArrivalTime(java.sql.Date arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 	/**
