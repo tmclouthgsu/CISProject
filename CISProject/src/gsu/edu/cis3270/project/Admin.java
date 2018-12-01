@@ -11,8 +11,10 @@ public class Admin extends User{
 				"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob",1);
 		
         MySQLAccess dao = new MySQLAccess();
-        //System.out.println((dao.getUserFromDB("Bayek.Ofsiwa@nowhere.com")).firstName);
-        dao.insertUserToDB(bob);
+        System.out.println((dao.getUserFromDB("Bayek.Ofsiwa@nowhere.com")).getFirstName());
+        //dao.insertUserToDB(bob);
+        System.out.println((dao.getFlightFromDB(1753)).getFromCity());
+        
     }
 
 }

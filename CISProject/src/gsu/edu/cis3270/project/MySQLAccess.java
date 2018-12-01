@@ -121,23 +121,24 @@ public class MySQLAccess {
 
     public void insertUserToDB(User user) throws Exception{
 
+
     	try{
 
     		connect = DriverManager
     				.getConnection("jdbc:mysql://localhost/ProjectDB?"
     						+ "user=root&password=password");
     		preparedStatement = connect.prepareStatement("insert into  ProjectDB.User values (?,?,?,?,?,?,?,?,?,?,?)");
-    		preparedStatement.setString(1, user.email);
-    		preparedStatement.setString(2, user.firstName);
-    		preparedStatement.setString(3, user.lastName);
-    		preparedStatement.setString(4, user.address);
-    		preparedStatement.setInt(5, user.zip);
-    		preparedStatement.setString(6, user.state);
-    		preparedStatement.setString(7, user.password);
-    		preparedStatement.setInt(8, user.SSN);
-    		preparedStatement.setString(9, user.secQ);
-    		preparedStatement.setString(10, user.secQAnswer);
-    		preparedStatement.setInt(11, user.isAdmin);
+    		preparedStatement.setString(1, user.getEmail());
+    		preparedStatement.setString(2, user.getFirstName());
+    		preparedStatement.setString(3, user.getLastName());
+    		preparedStatement.setString(4, user.getAddress());
+    		preparedStatement.setInt(5, user.getZip());
+    		preparedStatement.setString(6, user.getState());
+    		preparedStatement.setString(7, user.getPassword());
+    		preparedStatement.setInt(8, user.getSSN());
+    		preparedStatement.setString(9, user.getSecQ());
+    		preparedStatement.setString(10, user.getSecQAnswer());
+    		preparedStatement.setInt(11, user.getIsAdmin());
     		preparedStatement.executeUpdate();
 
     	}catch(Exception e) {
@@ -145,6 +146,48 @@ public class MySQLAccess {
     	}finally {
     	}
 
+    }
+ 
+    public Flight getFlightFromDB(int flightnumber) throws Exception{
+    	
+    	String toCity = "";
+    	String fromCity  = "";
+    	Date departureTime = new Date();
+    	Date arrivalTime = new Date();
+    	int passengers = 0;
+    	int flightNumber = 0;
+    	Flight currentFlight = new Flight();
+
+    	try{
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.Flight where FLIGHTNUMBER = ? ; ");
+    		preparedStatement.setInt(1, flightnumber);
+    		resultSet = preparedStatement.executeQuery();
+    		
+        	while (resultSet.next()){
+        		flightNumber = resultSet.getInt(1);
+        		toCity = resultSet.getString(2);
+        		fromCity = resultSet.getString(3);
+        		departureTime = resultSet.getDate(4);
+        		arrivalTime = resultSet.getDate(5);
+        		passengers = resultSet.getInt(6);
+        	}
+
+    	} catch (Exception e) {
+    		throw e;
+    	} finally {
+    		close();
+    	}
+
+    	if(flightNumber != 0){
+
+    		currentFlight = new Flight(flightNumber, toCity, fromCity, 
+    				departureTime, arrivalTime, passengers);
+    	}
+    	return currentFlight; 
+    	
     }
     
     private void writeMetaData(ResultSet resultSet) throws SQLException {

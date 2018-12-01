@@ -2,17 +2,17 @@ package gsu.edu.cis3270.project;
 
 public class User {
 	
-	protected String firstName;
-	protected String lastName;
-	protected String address;
-	protected int zip;
-	protected String state;
-	protected String password;
-	protected String email;
-	protected int SSN;
-	protected String secQ;
-	protected String secQAnswer;
-	protected int isAdmin;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private int zip;
+	private String state;
+	private String password;
+	private String email;
+	private int SSN;
+	private String secQ;
+	private String secQAnswer;
+	private int isAdmin;
 	
 	public User(){
 		

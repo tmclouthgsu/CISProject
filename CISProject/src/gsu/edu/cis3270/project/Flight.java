@@ -10,7 +10,9 @@ public class Flight {
 	private Date arrivalTime;
 	private int passengers;
 
-	public Flight(int flightNumber, String toCity, String fromCity, Date departureTime, Date arrivalTime, int passengers){
+	public Flight(int flightNumber, String toCity, String fromCity, 
+			Date departureTime, Date arrivalTime, int passengers){
+		
 		this.flightNumber = flightNumber;
 		this.toCity = toCity;
 		this.fromCity = fromCity;
@@ -19,6 +21,10 @@ public class Flight {
 		this.passengers = passengers;
 	}
 	
+	public Flight() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * @return the flightNumber
 	 */
