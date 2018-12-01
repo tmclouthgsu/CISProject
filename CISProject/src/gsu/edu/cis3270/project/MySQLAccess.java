@@ -66,7 +66,87 @@ public class MySQLAccess {
         }
 
     }
+    
+    public User getUserFromDB(String username) throws Exception{
 
+    	String email = "";
+    	String firstName  = "";
+    	String lastName = "";
+    	String address = "";
+    	int zip = 0;
+    	String state = "";
+    	String password = "";
+    	int ssn = 0;
+    	String secQ = "";
+    	String secQAnswer = "";
+    	int isAdmin = 0;
+    	User logInUser = new User();
+
+    	try{
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.User where EMAIL = ? ; ");
+    		preparedStatement.setString(1, username);
+    		resultSet = preparedStatement.executeQuery();
+    		
+        	while (resultSet.next()){
+        		email = resultSet.getString(1);
+        		firstName = resultSet.getString(2);
+        		lastName = resultSet.getString(3);
+        		address = resultSet.getString(4);
+        		zip = resultSet.getInt(5);
+        		state = resultSet.getString(6);
+        		password = resultSet.getString(7);
+        		ssn = resultSet.getInt(8);
+        		secQ = resultSet.getString(9);
+        		secQAnswer = resultSet.getString(10);
+        		isAdmin = resultSet.getInt(11);
+        	}
+
+    	} catch (Exception e) {
+    		throw e;
+    	} finally {
+    		close();
+    	}
+
+    	if(ssn != 0){
+
+    		logInUser = new User(firstName, lastName, address, 
+    				zip, state, password, email, ssn, secQ, secQAnswer,isAdmin);
+    	}
+    	return logInUser; 
+
+    }
+
+    public void insertUserToDB(User user) throws Exception{
+
+    	try{
+
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("insert into  ProjectDB.User values (?,?,?,?,?,?,?,?,?,?,?)");
+    		preparedStatement.setString(1, user.email);
+    		preparedStatement.setString(2, user.firstName);
+    		preparedStatement.setString(3, user.lastName);
+    		preparedStatement.setString(4, user.address);
+    		preparedStatement.setInt(5, user.zip);
+    		preparedStatement.setString(6, user.state);
+    		preparedStatement.setString(7, user.password);
+    		preparedStatement.setInt(8, user.SSN);
+    		preparedStatement.setString(9, user.secQ);
+    		preparedStatement.setString(10, user.secQAnswer);
+    		preparedStatement.setInt(11, user.isAdmin);
+    		preparedStatement.executeUpdate();
+
+    	}catch(Exception e) {
+    		throw e;
+    	}finally {
+    	}
+
+    }
+    
     private void writeMetaData(ResultSet resultSet) throws SQLException {
         //  Now get some metadata from the database
         // Result set get the result of the SQL query

@@ -2,33 +2,31 @@ package gsu.edu.cis3270.project;
 
 public class User {
 	
-	private String firstName;
-	private String lastName;
-	private String address;
-	private String zip;
-	private String state;
-	private String username;
-	private String password;
-	private String email;
-	private String SSN;
-	private String secQ;
-	private String secQAnswer;
-	private Boolean isAdmin;
+	protected String firstName;
+	protected String lastName;
+	protected String address;
+	protected int zip;
+	protected String state;
+	protected String password;
+	protected String email;
+	protected int SSN;
+	protected String secQ;
+	protected String secQAnswer;
+	protected int isAdmin;
 	
 	public User(){
 		
 	}
 
 	public User(String firstName, String lastName, String address, 
-				String zip, String state, String username, String password, 
-				String email, String SSN, String secQ, String secQAnswer, 
-				Boolean isAdmin){
+				int zip, String state, String password, 
+				String email, int SSN, String secQ, String secQAnswer, 
+				int isAdmin){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.zip = zip;
 		this.state = state;
-		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.SSN = SSN;
@@ -86,13 +84,13 @@ public class User {
 	/**
 	 * @return the zip
 	 */
-	public String getZip() {
+	public int getZip() {
 		return zip;
 	}
 	/**
 	 * @param zip the zip to set
 	 */
-	public void setZip(String zip) {
+	public void setZip(int zip) {
 		this.zip = zip;
 	}
 	/**
@@ -106,18 +104,6 @@ public class User {
 	 */
 	public void setState(String state) {
 		this.state = state;
-	}
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
 	}
 	/**
 	 * @return the password
@@ -146,14 +132,14 @@ public class User {
 	/**
 	 * @return the sSN
 	 */
-	public String getSSN() {
+	public int getSSN() {
 		return SSN;
 	}
 	/**
 	 * @param sSN the sSN to set
 	 */
-	public void setSSN(String sSN) {
-		SSN = sSN;
+	public void setSSN(int SSN) {
+		this.SSN = SSN;
 	}
 	/**
 	 * @return the secQ
@@ -183,14 +169,14 @@ public class User {
 	/**
 	 * @return the isAdmin
 	 */
-	public Boolean getIsAdmin() {
+	public int getIsAdmin() {
 		return isAdmin;
 	}
 
 	/**
 	 * @param isAdmin the isAdmin to set
 	 */
-	public void setIsAdmin(Boolean isAdmin) {
+	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 	
