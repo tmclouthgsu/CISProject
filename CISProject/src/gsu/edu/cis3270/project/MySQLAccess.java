@@ -372,6 +372,7 @@ public class MySQLAccess {
     	
     }
 
+    
     public void removeUserFromFlight(Flight flight, User user) throws Exception{
     	
         Connection connect = null;
@@ -405,28 +406,9 @@ public class MySQLAccess {
     }
     
     
-    private void writeResultSet(ResultSet resultSet) throws SQLException {
-        // ResultSet is initially before the first data set
-        while (resultSet.next()) {
-            // It is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g. resultSet.getSTring(2);
-            String user = resultSet.getString("myuser");
-            String website = resultSet.getString("webpage");
-            String summary = resultSet.getString("summary");
-            Date date = resultSet.getDate("datum");
-            String comment = resultSet.getString("comments");
-            System.out.println("User: " + user);
-            System.out.println("Website: " + website);
-            System.out.println("summary: " + summary);
-            System.out.println("Date: " + date);
-            System.out.println("Comment: " + comment);
-        }
-    }
-
+    
     // You need to close the resultSet
-   
+
     private void close(ResultSet rs, Connection connect, Statement statement) {
         try {
             if (rs != null) {
