@@ -243,6 +243,7 @@ public class MySQLAccess {
     	
     }
     
+    
     public ArrayList<Flight> searchByFromCity(String searchCriteria) throws Exception{
     	
         Connection connect = null;
@@ -273,7 +274,8 @@ public class MySQLAccess {
     	
     }
     
-    public ArrayList<User> getPassengersForFlight(Flight flight) throws Exception{
+    
+	public ArrayList<User> getPassengersForFlight(Flight flight) throws Exception{
     	
         Connection connect = null;
         Statement statement = null;
@@ -304,6 +306,7 @@ public class MySQLAccess {
     	return userList;
     }
     
+	
 	public ArrayList<Flight> getFlightsForUser(User user){
         
 		Connection connect = null;
@@ -401,18 +404,7 @@ public class MySQLAccess {
     	
     }
     
-    private void writeMetaData(ResultSet resultSet) throws SQLException {
-        //  Now get some metadata from the database
-        // Result set get the result of the SQL query
-
-        System.out.println("The columns in the table are: ");
-
-        System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
-        for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
-            System.out.println("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
-        }
-    }
-
+    
     private void writeResultSet(ResultSet resultSet) throws SQLException {
         // ResultSet is initially before the first data set
         while (resultSet.next()) {
@@ -434,6 +426,7 @@ public class MySQLAccess {
     }
 
     // You need to close the resultSet
+   
     private void close(ResultSet rs, Connection connect, Statement statement) {
         try {
             if (rs != null) {
