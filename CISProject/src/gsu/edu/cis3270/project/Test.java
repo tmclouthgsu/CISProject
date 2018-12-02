@@ -1,8 +1,8 @@
 package gsu.edu.cis3270.project;
 
-public class Admin extends User{
+public class Test {
 	
-    public Admin() {
+    public Test() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -35,6 +35,8 @@ public class Admin extends User{
         
         //dao.removeUserFromFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
         
+        User.registerUser("Bob","Tester","101 bobs house",12345,"Alaska",
+				"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob");
     }
 
 }

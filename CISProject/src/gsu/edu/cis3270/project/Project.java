@@ -2,34 +2,31 @@ package gsu.edu.cis3270.project;
 
 public class Project {
 	
-	public static User registerUser(String firstName, String lastName, String address, 
-				int zip, String state, String password, 
-				String email, int SSN, String secQ, String secQAnswer){
-		User registrant = new User(firstName,lastName,address,zip,state,password,
-				email,SSN,secQ,secQAnswer,0);
-		MySQLAccess userRegistration = new MySQLAccess();
-		try {
-				if(userRegistration.getUserFromDB(registrant.getEmail()) == null){
-					userRegistration.insertUserToDB(registrant);
-				}
-				else{
-					System.out.println("This username already belongs to a registered user");
-				}
-				
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return registrant;
-	}
 
 	public static void main(String[] args) {
 		
-		registerUser("Bob","Tester","101 bobs house",12345,"Alaska",
-				"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob");
+		//display login screen
 		
+		//either allow user to register or allow user to sign in
 		
-
+		//process either registration or sign in 
+			//(match password or just create new user obj in DB)
+		
+		//redirect to home page 
+			//(x buttons: view all flights, view my flights, add flight (hidden unless admin)
+		
+		//view all flights 
+			//(searchable and has option to register for that flight)
+			//also has a link to go back to home
+		
+		//view my flights 
+			//non searchable and has option to remove that flight from user
+			//also has a link to go back to home
+		
+		//add a flight 
+			//(dialog box to create a new flight object) 
+			//also has a link to go back to home
+		
 	}
 
 }

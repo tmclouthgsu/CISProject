@@ -20,6 +20,19 @@ public class Flight {
 		this.passengers = passengers;
 	}
 	
+	public int getCurrentPassengers(Flight flight){
+		MySQLAccess counter = new MySQLAccess();
+		int passengerCount = 0;
+		
+		try {
+			 passengerCount = (counter.getPassengersForFlight(flight)).size();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return passengerCount;
+	}
+	
 	public Flight() {
 		// TODO Auto-generated constructor stub
 	}
