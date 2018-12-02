@@ -322,6 +322,38 @@ public class MySQLAccess {
     	
     }
 
+    public void removeUserFromFlight(Flight flight, User user) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+    	
+    	try{
+
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+
+    		for(User passenger : getPassengersForFlight(flight.getFlightNumber())){
+    			
+    			if(user.getEmail().matches(passenger.getEmail())){
+    				
+    				preparedStatement = connect.prepareStatement("delete from ProjectDB.UserFlight "
+    						+ "where FLIGHTNUMBER = ? AND USEREMAIL = ? ");
+    	    		preparedStatement.setInt(1, flight.getFlightNumber());
+    	    		preparedStatement.setString(2, user.getEmail());
+    	    		preparedStatement.executeUpdate();  				
+    			}
+    		}
+    	}catch(Exception e) {
+    		throw e;
+    	}finally {
+    		close(resultSet,connect,statement);
+    	}  
+    	
+    }
+    
     private void writeMetaData(ResultSet resultSet) throws SQLException {
         //  Now get some metadata from the database
         // Result set get the result of the SQL query

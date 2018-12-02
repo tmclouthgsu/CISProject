@@ -29,6 +29,8 @@ public class Admin extends User{
         
         dao.addUserToFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
         
+        dao.removeUserFromFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
+        
     }
 
 }
