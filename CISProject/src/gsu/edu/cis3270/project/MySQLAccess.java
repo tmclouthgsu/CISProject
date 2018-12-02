@@ -183,15 +183,29 @@ public class MySQLAccess {
     private ArrayList<Flight> listFlights(ResultSet rs){
     	
     	
-    	ArrayList<Flight> flightList = new ArrayList<Flight>();
+    	ArrayList<Flight> flightList = new ArrayList<Flight>(); 
     	
     	try {
-			while (rs.next()){
-				flightList.add(new Flight(rs.getInt(1),rs.getString(2),
-						rs.getString(3),rs.getDate(4),
-						rs.getDate(5),rs.getInt(6)));		
-			}
+    		
+    		if(rs.getMetaData().getColumnCount() == 6){
+    			rs.beforeFirst();
+    			while (rs.next()){
+    				flightList.add(new Flight(rs.getInt(1),rs.getString(2),
+    						rs.getString(3),rs.getDate(4),
+    						rs.getDate(5),rs.getInt(6)));		
+    			}
+    		}
+    		else{
+    			rs.beforeFirst();
+    			while (rs.next()){
+    				flightList.add(getFlightFromDB(rs.getInt(1)));		
+    			}
+    		}
+    		
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -259,7 +273,7 @@ public class MySQLAccess {
     	
     }
     
-    public ArrayList<User> getPassengersForFlight(int flightNumber) throws Exception{
+    public ArrayList<User> getPassengersForFlight(Flight flight) throws Exception{
     	
         Connection connect = null;
         Statement statement = null;
@@ -274,7 +288,7 @@ public class MySQLAccess {
     				.getConnection("jdbc:mysql://localhost/ProjectDB?"
     						+ "user=root&password=password");
     		preparedStatement = connect.prepareStatement("select * from ProjectDB.UserFlight where FLIGHTNUMBER = ? ; ");
-    		preparedStatement.setInt(1, flightNumber);
+    		preparedStatement.setInt(1, flight.getFlightNumber());
     		resultSet = preparedStatement.executeQuery();
    		
 			while (resultSet.next()){
@@ -284,10 +298,43 @@ public class MySQLAccess {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close(resultSet,connect,statement);
 		}
     	return userList;
     }
     
+	public ArrayList<Flight> getFlightsForUser(User user){
+        
+		Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+    	
+    	ArrayList<Flight> flightList = new ArrayList<Flight>();
+    	
+    	try {
+    		
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.UserFlight where USEREMAIL = ? ; ");
+    		preparedStatement.setString(1, user.getEmail());
+    		resultSet = preparedStatement.executeQuery();
+   		
+			if(resultSet.next()){
+				flightList = listFlights(resultSet);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(resultSet,connect,statement);
+		}
+    	return flightList;
+    }
+
     public void addUserToFlight(Flight flight, User user) throws Exception{
     	
         Connection connect = null;
@@ -301,7 +348,7 @@ public class MySQLAccess {
     				.getConnection("jdbc:mysql://localhost/ProjectDB?"
     						+ "user=root&password=password");
 
-    		for(User passenger : getPassengersForFlight(flight.getFlightNumber())){
+    		for(User passenger : getPassengersForFlight(flight)){
     			if(user.getEmail().matches(passenger.getEmail())){
     				close(resultSet,connect,statement);
     				System.out.println("You are already registered for this Flight");
@@ -335,7 +382,7 @@ public class MySQLAccess {
     				.getConnection("jdbc:mysql://localhost/ProjectDB?"
     						+ "user=root&password=password");
 
-    		for(User passenger : getPassengersForFlight(flight.getFlightNumber())){
+    		for(User passenger : getPassengersForFlight(flight)){
     			
     			if(user.getEmail().matches(passenger.getEmail())){
     				

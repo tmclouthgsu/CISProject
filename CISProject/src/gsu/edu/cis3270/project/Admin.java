@@ -17,19 +17,23 @@ public class Admin extends User{
         
         //dao.insertUserToDB(bob);
         
-        System.out.println((dao.getFlightFromDB(1753)).getFromCity());
+        System.out.println("get flight from db " + (dao.getFlightFromDB(1753)).getFromCity());
         
         for(Flight temp : dao.searchByToCity("a")){
-        	System.out.println(temp.getFlightNumber());
+        	System.out.println("Search by to city " + temp.getFlightNumber());
         }
         
-        for(User temp : dao.getPassengersForFlight(2490)){
-        	System.out.println(temp.getPassword());
+        for(User temp : dao.getPassengersForFlight(dao.getFlightFromDB(2490))){
+        	System.out.println("get passengers for flight " + temp.getPassword());
         }
         
-        dao.addUserToFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
+        for(Flight temp : dao.getFlightsForUser(dao.getUserFromDB("Lev.Yashin@nowhere.com"))){
+        	System.out.println("get flights for user " + temp.getFromCity());
+        }
         
-        dao.removeUserFromFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
+        dao.addUserToFlight(dao.getFlightFromDB(2683),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
+        
+        //dao.removeUserFromFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
         
     }
 
