@@ -23,6 +23,12 @@ public class Admin extends User{
         	System.out.println(temp.getFlightNumber());
         }
         
+        for(User temp : dao.getPassengersForFlight(2490)){
+        	System.out.println(temp.getPassword());
+        }
+        
+        dao.addUserToFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
+        
     }
 
 }

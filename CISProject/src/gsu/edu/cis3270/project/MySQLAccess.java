@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class MySQLAccess {
-    private Connection connect = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
 
    
     public User getUserFromDB(String username) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
     	String email = "";
     	String firstName  = "";
@@ -57,7 +58,7 @@ public class MySQLAccess {
     	} catch (Exception e) {
     		throw e;
     	} finally {
-    		close();
+    		close(resultSet,connect,statement);
     	}
 
     	if(email != null){
@@ -70,6 +71,11 @@ public class MySQLAccess {
     }
 
     public void insertUserToDB(User user) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
 
     	try{
@@ -94,11 +100,17 @@ public class MySQLAccess {
     	}catch(Exception e) {
     		throw e;
     	}finally {
+    		close(resultSet,connect,statement);
     	}
 
     }
  
     public Flight getFlightFromDB(int flightnumber) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
     	
     	String toCity = "";
     	String fromCity  = "";
@@ -128,7 +140,7 @@ public class MySQLAccess {
     	} catch (Exception e) {
     		throw e;
     	} finally {
-    		close();
+    		close(resultSet,connect,statement);
     	}
 
     	if(flightNumber != 0){
@@ -141,6 +153,11 @@ public class MySQLAccess {
     }
 
     public void insertFlightToDB(Flight flight) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
     	
     	try{
 
@@ -159,18 +176,20 @@ public class MySQLAccess {
     	}catch(Exception e) {
     		throw e;
     	}finally {
+    		close(resultSet,connect,statement);
     	}   	
     }
     
-    public ArrayList<Flight> listFlights(ResultSet rs){
+    private ArrayList<Flight> listFlights(ResultSet rs){
+    	
     	
     	ArrayList<Flight> flightList = new ArrayList<Flight>();
     	
     	try {
 			while (rs.next()){
-				flightList.add(new Flight(resultSet.getInt(1),resultSet.getString(2),
-						resultSet.getString(3),resultSet.getDate(4),
-						resultSet.getDate(5),resultSet.getInt(6)));		
+				flightList.add(new Flight(rs.getInt(1),rs.getString(2),
+						rs.getString(3),rs.getDate(4),
+						rs.getDate(5),rs.getInt(6)));		
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -181,6 +200,11 @@ public class MySQLAccess {
     }
 
     public ArrayList<Flight> searchByToCity(String searchCriteria) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
     	
     	ArrayList<Flight> results = null;
     	
@@ -196,7 +220,7 @@ public class MySQLAccess {
     	} catch (Exception e) {
     		throw e;
     	} finally {
-    		close();
+    		close(resultSet,connect,statement);
     	}
     	
     	return results;
@@ -205,7 +229,99 @@ public class MySQLAccess {
     	
     }
     
+    public ArrayList<Flight> searchByFromCity(String searchCriteria) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+    	
+    	ArrayList<Flight> results = null;
+    	
+    	try{
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.Flight where FROMCITY like ? ; ");
+    		preparedStatement.setString(1, "%" + searchCriteria + "%");
+    		resultSet = preparedStatement.executeQuery();
+    		results = listFlights(resultSet);
+    		
+    	} catch (Exception e) {
+    		throw e;
+    	} finally {
+    		close(resultSet,connect,statement);
+    	}
+    	
+    	return results;
+    	
+    	
+    	
+    }
     
+    public ArrayList<User> getPassengersForFlight(int flightNumber) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+    	
+    	ArrayList<User> userList = new ArrayList<User>();
+    	
+    	try {
+    		
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.UserFlight where FLIGHTNUMBER = ? ; ");
+    		preparedStatement.setInt(1, flightNumber);
+    		resultSet = preparedStatement.executeQuery();
+   		
+			while (resultSet.next()){
+				userList.add(getUserFromDB(resultSet.getString("USEREMAIL")));		
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return userList;
+    }
+    
+    public void addUserToFlight(Flight flight, User user) throws Exception{
+    	
+        Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+    	
+    	try{
+
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+
+    		for(User passenger : getPassengersForFlight(flight.getFlightNumber())){
+    			if(user.getEmail().matches(passenger.getEmail())){
+    				close(resultSet,connect,statement);
+    				System.out.println("You are already registered for this Flight");
+    				return;
+    			}
+    		}
+    		
+    		preparedStatement = connect.prepareStatement("insert into  ProjectDB.UserFlight values (?,?)");
+    		preparedStatement.setInt(1, flight.getFlightNumber());
+    		preparedStatement.setString(2, user.getEmail());
+    		preparedStatement.executeUpdate();
+
+    	}catch(Exception e) {
+    		throw e;
+    	}finally {
+    		close(resultSet,connect,statement);
+    	}  
+    	
+    }
+
     private void writeMetaData(ResultSet resultSet) throws SQLException {
         //  Now get some metadata from the database
         // Result set get the result of the SQL query
@@ -239,10 +355,10 @@ public class MySQLAccess {
     }
 
     // You need to close the resultSet
-    private void close() {
+    private void close(ResultSet rs, Connection connect, Statement statement) {
         try {
-            if (resultSet != null) {
-                resultSet.close();
+            if (rs != null) {
+                rs.close();
             }
 
             if (statement != null) {
