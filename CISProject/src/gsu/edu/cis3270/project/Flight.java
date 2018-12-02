@@ -20,7 +20,7 @@ public class Flight {
 		this.passengers = passengers;
 	}
 	
-	public int getCurrentPassengers(Flight flight){
+	public static int getCurrentPassengers(Flight flight){
 		MySQLAccess counter = new MySQLAccess();
 		int passengerCount = 0;
 		

@@ -11,7 +11,7 @@ public class Test {
 		User bob = new User("Bob","Tester","101 bobs house",12345,"Alaska",
 				"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob",1);
 		
-        MySQLAccess dao = new MySQLAccess();
+		MySQLAccess dao = new MySQLAccess();
         
         System.out.println((dao.getUserFromDB("Bayek.Ofsiwa@nowhere.com")).getFirstName());
         
@@ -21,6 +21,7 @@ public class Test {
         
         for(Flight temp : dao.searchByToCity("a")){
         	System.out.println("Search by to city " + temp.getFlightNumber());
+        	System.out.println("Number of passengers on Flgiht: " + Flight.getCurrentPassengers(temp));
         }
         
         for(User temp : dao.getPassengersForFlight(dao.getFlightFromDB(2490))){
@@ -37,6 +38,8 @@ public class Test {
         
         User.registerUser("Bob","Tester","101 bobs house",12345,"Alaska",
 				"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob");
+        
+        System.out.println();
     }
 
 }
