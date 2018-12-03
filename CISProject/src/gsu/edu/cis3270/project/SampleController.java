@@ -11,22 +11,27 @@ public class SampleController {
 	public Label lblStatus;
 
 	public void loginButtonClick() {
-		System.out.println("Loading Login...");
-
-		String userId = txtUserId.getText();
-		String password = ptxtPassword.getText();
+		
+		MySQLAccess login = new MySQLAccess();		
 
 		try {
-			sa.getUserFromDB(userId);
-			lblStatus.setText("");
+			if(login.getUserFromDB(txtUserId.getText()).matchPassword(ptxtPassword.getText())){
+				lblStatus.setText("Login Passed. " );
+				//load home page
+
+			}
+			else{
+				lblStatus.setText("Login Failed. Try again...");
+			}
+			
 		} catch (Exception e) {
-			lblStatus.setText("Login Failed. Try again...");
 		}
 
 	}
 
 	public void registerButtonClick() {
-		System.out.println("Loading Register...");
+		lblStatus.setText("Load Register Page");
+		//load register user page
 
 	}
 
