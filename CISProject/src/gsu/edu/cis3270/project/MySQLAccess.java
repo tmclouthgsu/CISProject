@@ -241,8 +241,7 @@ public class MySQLAccess {
     	
     	
     }
-    
-    
+       
     public ArrayList<Flight> searchByFromCity(String searchCriteria) throws Exception{
     	
         Connection connect = null;
@@ -272,8 +271,7 @@ public class MySQLAccess {
     	
     	
     }
-    
-    
+      
 	public ArrayList<User> getPassengersForFlight(Flight flight) throws Exception{
     	
         Connection connect = null;
@@ -305,7 +303,6 @@ public class MySQLAccess {
     	return userList;
     }
     
-	
 	public ArrayList<Flight> getFlightsForUser(User user){
         
 		Connection connect = null;
@@ -370,8 +367,7 @@ public class MySQLAccess {
     	}  
     	
     }
-
-    
+  
     public void removeUserFromFlight(Flight flight, User user) throws Exception{
     	
         Connection connect = null;
@@ -404,10 +400,6 @@ public class MySQLAccess {
     	
     }
     
-    
-    
-    // You need to close the resultSet
-
     private void close(ResultSet rs, Connection connect, Statement statement) {
         try {
             if (rs != null) {
