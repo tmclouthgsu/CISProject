@@ -1,0 +1,54 @@
+/*
+FLIGHT INSERT STATEMENTS
+*/
+INSERT INTO Flight (FLIGHTNUMBER, TOCITY, FROMCITY, DEPARTURETIME, ARRIVALTIME, PASSENGERS)
+VALUES (2490, 'Atlanta', 'Charlotte','2018-11-20 18:20:30', '2018-11-20 20:40:45', 5);
+
+INSERT INTO Flight (FLIGHTNUMBER, TOCITY, FROMCITY, DEPARTURETIME, ARRIVALTIME, PASSENGERS)
+VALUES (3691, 'Chicago', 'Seattle','2018-08-18 10:45:50', '2018-08-18 13:55:45', 4);
+
+INSERT INTO Flight (FLIGHTNUMBER, TOCITY, FROMCITY, DEPARTURETIME, ARRIVALTIME, PASSENGERS)
+VALUES (4832, 'Boston', 'Phoenix','2018-04-01 7:15:30', '2018-04-01 11:30:45', 4);
+
+INSERT INTO Flight (FLIGHTNUMBER, TOCITY, FROMCITY, DEPARTURETIME, ARRIVALTIME, PASSENGERS)
+VALUES (6389, 'Detroit', 'Sacramento','2018-10-31 15:30:30', '2018-10-31 18:05:45', 5);
+
+INSERT INTO Flight (FLIGHTNUMBER, TOCITY, FROMCITY, DEPARTURETIME, ARRIVALTIME, PASSENGERS)
+VALUES (2683, 'Honolulu', 'Atlanta','2018-06-01 08:15:30', '2018-06-01 16:45:45', 4);
+
+INSERT INTO Flight (FLIGHTNUMBER, TOCITY, FROMCITY, DEPARTURETIME, ARRIVALTIME, PASSENGERS)
+VALUES (1753, 'Los Angeles', 'New York City','2018-09-26 09:30:30', '2018-09-26 16:05:45', 5);
+/*
+USER INSERT STATEMENTS
+*/
+INSERT INTO User (EMAIL, FIRSTNAME, LASTNAME, ADDRESS, ZIP, STATE, PASSWORD, SSN, SECQ, SECQANSWER, ISADMIN)
+VALUES ('Bayek.Ofsiwa@nowhere.com', 'Bayek', 'Ofsiwa', '123 Peachtree St.', 30303, 'Georgia', '12345', 234123456, 'How are you?', 'Good', true);
+
+INSERT INTO User (EMAIL, FIRSTNAME, LASTNAME, ADDRESS, ZIP, STATE, PASSWORD, SSN, SECQ, SECQANSWER, ISADMIN)
+VALUES ('Lucioboops.Cruz@somewhere.com', 'Lucio', 'Cruz', '321 Illios Ave.', 90384, 'California', 'BeatDrop1', 254618315, 'What do you do?', 'Heal', false);
+
+INSERT INTO User (EMAIL, FIRSTNAME, LASTNAME, ADDRESS, ZIP, STATE, PASSWORD, SSN, SECQ, SECQANSWER, ISADMIN)
+VALUES ('Zenyatta.Jjonak@nowhere.com', 'Zenyatta', 'Jjonak', '456 Kings Row Lane', 70142, 'Louisiana', 'Iris9000', 281974756, 'Do you heal or damage?', 'both', false);
+
+INSERT INTO User (EMAIL, FIRSTNAME, LASTNAME, ADDRESS, ZIP, STATE, PASSWORD, SSN, SECQ, SECQANSWER, ISADMIN)
+VALUES ('Paolo.Maldini@somewhere.com', 'Paolo', 'Maldini', '450 ArrigoSacchi Way', 50363, 'Iowa', 'IlCapitano', 261289612, 'Are you the best defender ever?', 'Obviously', false);
+
+INSERT INTO User (EMAIL, FIRSTNAME, LASTNAME, ADDRESS, ZIP, STATE, PASSWORD, SSN, SECQ, SECQANSWER, ISADMIN)
+VALUES ('Lev.Yashin@nowhere.com', 'Lev', 'Yashin', '789 MoscowRussia Bvd.', 99553, 'Alaska', 'BlackSpider', 279612652, 'Why are you the greatest goalkeeper?', 'Ballon dOr', false);
+/*
+User flight inserts
+*/
+INSERT INTO UserFlight (FLIGHTNUMBER, USEREMAIL)
+VALUES (2490, 'Bayek.Ofsiwa@nowhere.com');
+
+INSERT INTO UserFlight (FLIGHTNUMBER, USEREMAIL)
+VALUES (3691, 'Lucioboops.Cruz@somewhere.com');
+
+INSERT INTO UserFlight (FLIGHTNUMBER, USEREMAIL)
+VALUES (6389, 'Zenyatta.Jjonak@nowhere.com');
+
+INSERT INTO UserFlight (FLIGHTNUMBER, USEREMAIL)
+VALUES (2683, 'Paolo.Maldini@somewhere.com');
+
+INSERT INTO UserFlight (FLIGHTNUMBER, USEREMAIL)
+VALUES (1753, 'Lev.Yashin@nowhere.com');
