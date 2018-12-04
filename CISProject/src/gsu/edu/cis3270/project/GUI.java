@@ -126,8 +126,7 @@ public class GUI extends Application {
 			if(tempuser.matchPassword(password)){
 				System.out.println("login passed");
 				user = login.getUserFromDB(username);
-				//go to home screen
-				stage.setScene(getMyFlightsScene());
+				stage.setScene(getHomeScene());
 			}
 			else{
 				loginpage.showAlert(Alert.AlertType.ERROR, loginpage.gridPane.getScene().getWindow(), "Credential Error!",
@@ -139,6 +138,36 @@ public class GUI extends Application {
 		}
 	}
 	
+	
+//////////////////////////////////////////////////////////////////////////////////
+	
+	public Scene getHomeScene() {
+		if (sceneHome == null) {
+			sceneHome = new Scene(getHomePane(), width, height);
+		}
+		return sceneHome;
+	}
+	
+	public HomePage getHomePane() {
+		if (paneHome != null)
+			return paneHome;
+		paneHome = new HomePage(this){
+			@Override
+			protected void onGoToMyFlights() {
+				userFlights();
+			}
+			
+			protected void onGoToSearch() {
+				allFlights();
+			}
+			
+			protected void onGoToAddFlights(){
+				//onRegisterButtonClick();
+			}
+			
+		};
+		return paneHome;
+	}
 	
 //////////////////////////////////////////////////////////////////////////////////
 	
@@ -294,15 +323,24 @@ public class GUI extends Application {
 	
 	
 	public void onCancelButtonClick(){
-		//load home page
+		stage.setScene(getHomeScene());
 	}
 	
 	public void userFlights(){
+		stage.setScene(getMyFlightsScene());
+		paneMyFlights.clearScene();
 		searchResults = db.getFlightsForUser(user);
+		paneMyFlights.init(this);
+		stage.setScene(getMyFlightsScene());
+		
 	}
 	
 	public void allFlights(){
+		stage.setScene(getSearchFlightScene());
+		paneSearchFlight.clearScene();
 		searchResults = db.getAllFLights();
+		paneSearchFlight.init(this);
+		stage.setScene(getSearchFlightScene());
 	}
 	
 	

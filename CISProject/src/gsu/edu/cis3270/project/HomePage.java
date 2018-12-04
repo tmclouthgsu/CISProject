@@ -24,11 +24,11 @@ public abstract class HomePage extends HBox {
 	
 	GridPane grid;
 	
-	public HomePage(){
-		init();
+	public HomePage(GUI gui){
+		init(gui);
 	}
 
-	public void init(){
+	public void init(GUI gui){
 		grid = new GridPane();
 		
 		grid.setAlignment(Pos.CENTER);
@@ -41,12 +41,18 @@ public abstract class HomePage extends HBox {
 		tltWelcome.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(tltWelcome, 0, 0, 2, 1);
 
-		Button butSearch = new Button("Search FLights");
+		Button butSearch = new Button("Search Flights");
 		butSearch.setPrefWidth(200);
 		HBox hbutSearch = new HBox(10);
 		hbutSearch.setAlignment(Pos.CENTER_LEFT);
 		hbutSearch.getChildren().add(butSearch);
 		grid.add(hbutSearch, 0, 4);
+		
+		butSearch.setOnAction(new EventHandler<ActionEvent>() {
+	        @Override public void handle(ActionEvent e) {
+	            HomePage.this.onGoToSearch();
+	        }
+	    });
 
 		Button butMyFLights = new Button("My Flights");
 		butMyFLights.setPrefWidth(90);
@@ -54,6 +60,12 @@ public abstract class HomePage extends HBox {
 		hbutMyFLights.setAlignment(Pos.CENTER_LEFT);
 		hbutMyFLights.getChildren().add(butMyFLights);
 		grid.add(hbutMyFLights, 0, 5);
+		
+		butMyFLights.setOnAction(new EventHandler<ActionEvent>() {
+	        @Override public void handle(ActionEvent e) {
+	            HomePage.this.onGoToMyFlights();
+	        }
+	    });
 
 		Button butAddFlight = new Button("Add New Flight");
 		HBox hbutAddFlight = new HBox(0);
@@ -61,9 +73,19 @@ public abstract class HomePage extends HBox {
 		hbutAddFlight.getChildren().add(butAddFlight);
 		grid.add(hbutAddFlight, 1, 5);
 		
+		butAddFlight.setOnAction(new EventHandler<ActionEvent>() {
+	        @Override public void handle(ActionEvent e) {
+	            HomePage.this.onGoToAddFlights();
+	        }
+	    });
+		
 		HBox hbox = new HBox();
 		hbox.getChildren().add(grid);
 		this.getChildren().add(hbox);
 		
 	}
+	
+	protected abstract void onGoToSearch();
+	protected abstract void onGoToMyFlights();
+	protected abstract void onGoToAddFlights();
 }
