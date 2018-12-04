@@ -1,20 +1,15 @@
 package gsu.edu.cis3270.project;
 
-import java.util.ArrayList;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.beans.value.*;
 
 public abstract class SearchFlightPane extends VBox {
 	

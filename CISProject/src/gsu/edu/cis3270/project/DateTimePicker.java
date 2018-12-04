@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
  * A DateTimePicker with configurable datetime format where both date and time can be changed
  * via the text field and the date can additionally be changed via the JavaFX default date picker.
  */
-@SuppressWarnings("unused")
 public class DateTimePicker extends DatePicker {
 	public static final String DefaultFormat = "yyyy-MM-dd HH:mm";
 

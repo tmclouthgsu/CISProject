@@ -8,8 +8,8 @@ public class Test {
 
 	public static void main(String[] args) throws Exception {
 		
-		User bob = new User("Bob","Tester","101 bobs house",12345,"Alaska",
-				"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob",1);
+		//User bob = new User("Bob","Tester","101 bobs house",12345,"Alaska",
+				//"mynameisbob","bobsemail@gmail.com",435679865,"my name is?","bob",1);
 		
 		MySQLAccess dao = new MySQLAccess();
         

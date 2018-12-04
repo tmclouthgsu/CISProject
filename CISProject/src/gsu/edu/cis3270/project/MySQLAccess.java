@@ -364,7 +364,8 @@ public class MySQLAccess {
     	return flightList;
     }
 
-    public int addUserToFlight(Flight flight, User user) throws Exception{
+    @SuppressWarnings("resource")
+	public int addUserToFlight(Flight flight, User user) throws Exception{
     	
         Connection connect = null;
         Statement statement = null;

@@ -3,15 +3,9 @@ package gsu.edu.cis3270.project;
 import java.util.ArrayList;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.*;
-import javafx.fxml.FXMLLoader;
-
 
 
 public class GUI extends Application {
@@ -19,7 +13,7 @@ public class GUI extends Application {
 	
 	private Stage stage = new Stage();
 	private MySQLAccess db = new MySQLAccess();
-	public final int width = 600;
+	public final int width = 800;
 	public final int height = 600;
 	
 	// Model ==================
@@ -191,7 +185,13 @@ public class GUI extends Application {
 			}
 			
 			protected void onGoToAddFlights(){
+				if(user.getIsAdmin() == 1){
 				stage.setScene(getAddFlightScene());
+				}
+				else{
+					paneHome.showAlert(Alert.AlertType.ERROR, loginpage.gridPane.getScene().getWindow(), "Credential Error!",
+							"This feature is only availble to Administrators");
+				}
 			}
 			
 		};
@@ -237,8 +237,8 @@ public class GUI extends Application {
 			e.printStackTrace();
 		}
 		
-		paneMyFlights.showAlert(Alert.AlertType.ERROR, paneMyFlights.table.getScene().getWindow(), "Remove Flight Complete",
-				"You are now longer on the selected flight");
+		paneMyFlights.showAlert(Alert.AlertType.CONFIRMATION, paneMyFlights.table.getScene().getWindow(), "Remove Flight Complete",
+				"You are no longer on the selected flight");
 		
 		paneMyFlights.clearScene();
 		searchResults = db.getFlightsForUser(user);
@@ -335,7 +335,7 @@ public class GUI extends Application {
 		}
 		
 		if(result == 1){
-			paneSearchFlight.showAlert(Alert.AlertType.ERROR, paneSearchFlight.grid.getScene().getWindow(), "Registration Complete!",
+			paneSearchFlight.showAlert(Alert.AlertType.CONFIRMATION, paneSearchFlight.grid.getScene().getWindow(), "Registration Complete!",
 					"Congratulations you are registered for the flight.");
 					return;
 		}
