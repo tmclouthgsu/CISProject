@@ -87,7 +87,7 @@ public abstract class RegisterPage extends HBox {
 		gridPane.add(txtState, 1, 5);
 
 		// Add EMAIL Label
-		Label lblEmail = new Label("Username : ");
+		Label lblEmail = new Label("Email : ");
 		gridPane.add(lblEmail, 0, 6);
 
 		// Add USERNAME Text Field
