@@ -42,6 +42,9 @@ public class GUI extends Application {
 	protected Scene sceneMyFlights;
 	protected MyFlightsPane paneMyFlights;
 	
+	protected Scene sceneAddFlight;
+	protected AddFlightPane paneAddFlight;
+	
 /////////////////////////////////////////////////////////////////////////////////////	
 	
 	
@@ -73,6 +76,36 @@ public class GUI extends Application {
 	
 	
 ////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	public Scene getAddFlightScene() {
+		if (sceneAddFlight == null) {
+			sceneAddFlight = new Scene(getAddFlightPane(), width, height);
+		}
+		return sceneAddFlight;
+	}
+	
+	public AddFlightPane getAddFlightPane() {
+		if (paneAddFlight != null)
+			return paneAddFlight;
+		paneAddFlight = new AddFlightPane(this){
+			@Override
+			protected  void onBackButton()	{
+				onRegisterButtonClick();
+			}
+			protected void onAddFlightButton() {
+				onAddFlightButtonClick();
+			}
+		};
+		return paneAddFlight;
+	}
+	
+	protected void onAddFlightButtonClick(){
+		stage.setScene(getHomeScene());
+	}
+	
+	
+///////////////////////////////////////////////////////////////////////////////////////	
 	
 	
 	public Scene getLoginScene() {
@@ -147,7 +180,7 @@ public class GUI extends Application {
 			}
 			
 			protected void onGoToAddFlights(){
-				//onRegisterButtonClick();
+				stage.setScene(getAddFlightScene());
 			}
 			
 		};
@@ -326,6 +359,10 @@ public class GUI extends Application {
 		searchResults = db.getAllFLights();
 		paneSearchFlight.init(this);
 		stage.setScene(getSearchFlightScene());
+	}
+	
+	public void addFlights(){
+		
 	}
 	
 	
