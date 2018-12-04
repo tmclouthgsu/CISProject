@@ -27,12 +27,7 @@ public class GUI extends Application {
 	
 	// Model ==================
 	protected User user;
-	protected ObservableList<Flight> lstSearchFlight; // used by ListFlight
-														// scene
-	protected Flight flightSelected; // used by Flight scene
-	protected Flight myFlightSelected; // user flight
 
-	protected ObservableList<Flight> lstMyFlight; // used by MyFlight scene
 	
 	// View ===================
 	protected Scene sceneLogin;
