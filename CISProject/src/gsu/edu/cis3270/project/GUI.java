@@ -42,7 +42,7 @@ public class GUI extends Application {
 	protected RegisterPage registerpage;
 	
 	protected Scene sceneHome;
-	protected HomePane paneHome;
+	protected HomePage paneHome;
 
 	protected Scene sceneSearchFlight;
 	protected SearchFlightPane paneSearchFlight;
@@ -144,6 +144,9 @@ public class GUI extends Application {
 	
 	
 	public Scene getMyFlightsScene() {
+		
+		searchResults = db.getFlightsForUser(user);
+		
 		if (sceneMyFlights == null) {
 			sceneMyFlights = new Scene(getMyFlightsPane(), width, height);
 		}
@@ -153,17 +156,36 @@ public class GUI extends Application {
 	public MyFlightsPane getMyFlightsPane() {
 		if (paneMyFlights != null)
 			return paneMyFlights;
-		paneMyFlights = new MyFlightsPane(user) {
+		paneMyFlights = new MyFlightsPane(this) {
 			@Override
 			protected void onFlightSelected(int row) {
+				onRemoveFlightButtonClick(row);
 			}
 
 			@Override
 			protected void onCancel() {
-				//go to home screen
+				onCancelButtonClick();
 			}
 		};
 		return paneMyFlights;
+	}
+	
+	protected void onRemoveFlightButtonClick(int row){
+
+		try {
+			db.removeUserFromFlight(searchResults.get(row), user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		paneMyFlights.showAlert(Alert.AlertType.ERROR, paneMyFlights.table.getScene().getWindow(), "Remove Flight Complete",
+				"You are now longer on the selected flight");
+		
+		paneMyFlights.clearScene();
+		userFlights();
+		paneMyFlights.init(this);
+		stage.setScene(getMyFlightsScene());
 	}
 	
 	
@@ -184,6 +206,7 @@ public class GUI extends Application {
 		paneSearchFlight = new SearchFlightPane(this) {
 			@Override
 			protected void onFlightSelected(int row) {
+				onAddFlightButtonClick(row);
 			}
 			
 			@Override
@@ -193,7 +216,7 @@ public class GUI extends Application {
 			
 			@Override
 			protected void onCancel() {
-				//go to home screen
+				onCancelButtonClick();
 			}
 		};
 		return paneSearchFlight;
@@ -243,8 +266,44 @@ public class GUI extends Application {
 
 	}
 	
+	protected void onAddFlightButtonClick(int row){
+		
+		int result = 0;
+		try {
+			result = db.addUserToFlight(searchResults.get(row), user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result == 1){
+			paneSearchFlight.showAlert(Alert.AlertType.ERROR, paneSearchFlight.grid.getScene().getWindow(), "Registration Complete!",
+					"Congratulations you are registered for the flight.");
+					return;
+		}
+		else{
+			paneSearchFlight.showAlert(Alert.AlertType.ERROR, paneSearchFlight.grid.getScene().getWindow(), "Registration Error!",
+					"We could not register you for this flight.");
+		}
+
+		
+	}
+	
 	
 ///////////////////////////////////////////////////////////////////////////////////
+	
+	
+	public void onCancelButtonClick(){
+		//load home page
+	}
+	
+	public void userFlights(){
+		searchResults = db.getFlightsForUser(user);
+	}
+	
+	public void allFlights(){
+		searchResults = db.getAllFLights();
+	}
 	
 	
 	@Override
@@ -252,7 +311,7 @@ public class GUI extends Application {
 		this.stage = stage;
 		stage.setTitle("Book-A-Flight");
 
-		stage.setScene(getSearchFlightScene());
+		stage.setScene(getLoginScene());
 		stage.show();
 	}
 	

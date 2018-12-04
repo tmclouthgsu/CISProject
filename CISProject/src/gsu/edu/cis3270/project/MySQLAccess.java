@@ -364,7 +364,7 @@ public class MySQLAccess {
     	return flightList;
     }
 
-    public void addUserToFlight(Flight flight, User user) throws Exception{
+    public int addUserToFlight(Flight flight, User user) throws Exception{
     	
         Connection connect = null;
         Statement statement = null;
@@ -381,7 +381,7 @@ public class MySQLAccess {
     			if(user.getEmail().matches(passenger.getEmail())){
     				close(resultSet,connect,statement);
     				System.out.println("You are already registered for this Flight");
-    				return;
+    				return 0;
     			}
     		}
     		
@@ -394,7 +394,8 @@ public class MySQLAccess {
     		throw e;
     	}finally {
     		close(resultSet,connect,statement);
-    	}  
+    	}
+    	return 1;
     	
     }
   

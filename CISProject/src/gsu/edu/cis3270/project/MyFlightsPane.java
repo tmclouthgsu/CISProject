@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.beans.value.*;
 
 public abstract class MyFlightsPane extends VBox {
@@ -21,14 +22,15 @@ public abstract class MyFlightsPane extends VBox {
     protected TableView<Flight> table;
     protected ObservableList<Flight> lstFlight; 
     
-    public MyFlightsPane(User user) {
+    public MyFlightsPane(GUI gui) { 	
     	
-    	MySQLAccess flightLookup = new MySQLAccess();
-    	this.lstFlight = FXCollections.observableArrayList(flightLookup.getFlightsForUser(user));
-        init();
+        init(gui);
     }
 
-    protected void init() {
+    protected void init(GUI gui) {
+    	
+    	lstFlight = FXCollections.observableArrayList(gui.searchResults);
+    	
         table = new TableView<Flight>();
         this.getChildren().add(table);
 
@@ -65,7 +67,7 @@ public abstract class MyFlightsPane extends VBox {
         table.setItems(lstFlight);
 
         
-        Button cmdOk = new Button("Go to the selected flight");
+        Button cmdOk = new Button("Remove This Flight");
         cmdOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int row = table.getSelectionModel().getSelectedIndex();
@@ -81,7 +83,7 @@ public abstract class MyFlightsPane extends VBox {
             cmdOk.setDisable(newSelection == null);
         });
         
-        Button cmd = new Button("Cancel");
+        Button cmd = new Button("Back");
         cmd.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 onCancel();
@@ -89,6 +91,19 @@ public abstract class MyFlightsPane extends VBox {
         });
         this.getChildren().add(cmd);
     }
+    
+	public void clearScene(){
+		this.getChildren().clear();
+	}
+	
+	public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.initOwner(owner);
+		alert.show();
+	}
 
     
     

@@ -122,7 +122,7 @@ public abstract class SearchFlightPane extends VBox {
             cmdOk.setDisable(newSelection == null);
         });
         
-        Button cancel = new Button("Cancel");
+        Button cancel = new Button("Back");
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 onCancel();
