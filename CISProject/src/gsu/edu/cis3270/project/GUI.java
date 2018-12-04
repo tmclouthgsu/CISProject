@@ -47,17 +47,8 @@ public class GUI extends Application {
 	protected Scene sceneSearchFlight;
 	protected SearchFlightPane paneSearchFlight;
 
-	protected Scene sceneListFlight;
-	protected ListFlightPane paneListFlight;
-
-	protected Scene sceneBookFlight;
-	protected BookFlightPane paneFlight;
-
 	protected Scene sceneMyFlights;
 	protected MyFlightsPane paneMyFlights;
-
-	protected Scene sceneMyFlight;
-	protected MyFlightPane paneMyFlight;
 	
 /////////////////////////////////////////////////////////////////////////////////////	
 	
