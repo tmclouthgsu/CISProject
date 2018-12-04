@@ -113,8 +113,8 @@ public class MySQLAccess {
     	
     	String toCity = "";
     	String fromCity  = "";
-    	java.sql.Date departureTime = null;
-    	java.sql.Date arrivalTime = null;
+    	java.sql.Timestamp departureTime = null;
+    	java.sql.Timestamp arrivalTime = null;
     	int passengers = 0;
     	int flightNumber = 0;
     	Flight currentFlight = new Flight();
@@ -131,8 +131,8 @@ public class MySQLAccess {
         		flightNumber = resultSet.getInt(1);
         		toCity = resultSet.getString(2);
         		fromCity = resultSet.getString(3);
-        		departureTime = resultSet.getDate(4);
-        		arrivalTime = resultSet.getDate(5);
+        		departureTime = resultSet.getTimestamp(4);
+        		arrivalTime = resultSet.getTimestamp(5);
         		passengers = resultSet.getInt(6);
         	}
 
@@ -159,16 +159,16 @@ public class MySQLAccess {
         ResultSet resultSet = null;
     	
     	try{
-
+    		
     		connect = DriverManager
     				.getConnection("jdbc:mysql://localhost/ProjectDB?"
     						+ "user=root&password=password");
-    		preparedStatement = connect.prepareStatement("insert into  ProjectDB.User values (?,?,?,?,?,?)");
+    		preparedStatement = connect.prepareStatement("insert into  ProjectDB.Flight values (?,?,?,?,?,?)");
     		preparedStatement.setInt(1, flight.getFlightNumber());
     		preparedStatement.setString(2, flight.getToCity());
     		preparedStatement.setString(3, flight.getFromCity());
-    		preparedStatement.setDate(4, flight.getDepartureTime());
-    		preparedStatement.setDate(5, flight.getArrivalTime());
+    		preparedStatement.setTimestamp(4, flight.getDepartureTime());
+    		preparedStatement.setTimestamp(5, flight.getArrivalTime());
     		preparedStatement.setInt(6, flight.getPassengers());
     		preparedStatement.executeUpdate();
 
@@ -190,8 +190,8 @@ public class MySQLAccess {
     			rs.beforeFirst();
     			while (rs.next()){
     				flightList.add(new Flight(rs.getInt(1),rs.getString(2),
-    						rs.getString(3),rs.getDate(4),
-    						rs.getDate(5),rs.getInt(6)));		
+    						rs.getString(3),rs.getTimestamp(4),
+    						rs.getTimestamp(5),rs.getInt(6)));		
     			}
     		}
     		else{

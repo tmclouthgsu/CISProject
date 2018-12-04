@@ -70,20 +70,21 @@ public abstract class AddFlightPane extends HBox {
 		gridPane.add(lblDepartureTime, 0, 3);
 
 		// Add DepartureTime Text Field
-		TextField txtDepartureTime = new TextField();
-		txtDepartureTime.setPrefHeight(40);
-		gridPane.add(txtDepartureTime, 1, 3);
-		txtDepartureTime.setPromptText("In Military Time (ex. 14:20) ");
+		DateTimePicker departureTime = new DateTimePicker();
+		departureTime.setPrefHeight(40);
+		gridPane.add(departureTime, 1, 3);
 
 		// Add ArrivalTime Label
 		Label lblArrivalTime = new Label("Arrival Time : ");
 		gridPane.add(lblArrivalTime, 0, 4);
 
 		// Add ArrivalTime Text Field
-		TextField txtArrivalTime = new TextField();
-		txtArrivalTime.setPrefHeight(40);
-		gridPane.add(txtArrivalTime, 1, 4);
-		txtArrivalTime.setPromptText("In Military Time (ex. 14:20) ");
+		
+
+		DateTimePicker arrivalTime = new DateTimePicker();
+		arrivalTime.setPrefHeight(40);
+		gridPane.add(arrivalTime, 1, 4);
+		//txtArrivalTime.setPromptText("In Military Time (ex. 14:20) ");
 
 		// Add Passengers Label
 		Label lblPassengers = new Label("Passengers : ");
@@ -111,6 +112,15 @@ public abstract class AddFlightPane extends HBox {
 		gridPane.add(butGoToHome, 0, 12, 2, 1);
 		GridPane.setHalignment(butGoToHome, HPos.CENTER);
 		GridPane.setMargin(butGoToHome, new Insets(0, 0, 0, 0));
+		
+		butGoToHome.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				
+				AddFlightPane.this.onBackButton();
+				
+			}
+		});
 
 		butAddFlight.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -128,15 +138,15 @@ public abstract class AddFlightPane extends HBox {
 					return;
 				}
 
-				if (txtDepartureTime.getText().isEmpty()) {
+				if (departureTime.getValue().toString().isEmpty()) {
 					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!",
-							"Please enter a Departure Time");
+							"Please pick a Departure Time");
 					return;
 				}
 
-				if (txtArrivalTime.getText().isEmpty()) {
+				if (arrivalTime.getValue().toString().isEmpty()) {
 					showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!",
-							"Please enter an Arrival Time");
+							"Please pick an Arrival Time");
 					return;
 				}
 
@@ -149,7 +159,11 @@ public abstract class AddFlightPane extends HBox {
 				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Confirmation",
 						"You Added a Flight From " + txtFromCity.getText() + " to " + txtToCity.getText());
 				
-				AddFlightPane.this.onAddFlightButton();
+				Flight flight = new Flight((int)(Math.random()*10000000), txtToCity.getText(), txtFromCity.getText(), 
+						java.sql.Timestamp.valueOf(departureTime.getDateTimeValue()), java.sql.Timestamp.valueOf(arrivalTime.getDateTimeValue()), 
+						Integer.parseInt(txtPassengers.getText()));
+							
+				AddFlightPane.this.onAddFlightButton(flight);
 				
 			}
 		});
@@ -169,6 +183,10 @@ public abstract class AddFlightPane extends HBox {
 		alert.show();
 	}
 	
+	public void clearScene(){
+		this.getChildren().clear();
+	}
+	
 	protected abstract void onBackButton();
-	protected abstract void onAddFlightButton();
+	protected abstract void onAddFlightButton(Flight flight);
 }

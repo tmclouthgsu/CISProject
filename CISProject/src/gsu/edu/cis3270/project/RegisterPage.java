@@ -222,13 +222,13 @@ public abstract class RegisterPage extends HBox {
 					return;
 				}
 				
-				User.registerUser(txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), Integer.parseInt(txtZip.getText()), txtState.getText(), txtPassword.getText(),
+				User user = User.registerUser(txtFirstName.getText(), txtLastName.getText(), txtAddress.getText(), Integer.parseInt(txtZip.getText()), txtState.getText(), txtPassword.getText(),
 						txtUsername.getText(), Integer.parseInt(txtSSN.getText()), txtSercuirtyQuestion.getText(), txtSercuirtyQuestionAnswer.getText());
 				
 				showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Registration Successful!",
 						"Welcome " + txtUsername.getText());
 				
-				RegisterPage.this.onRegister();
+				RegisterPage.this.onRegister(user);
 			}
 		}
 		);
@@ -243,7 +243,7 @@ public abstract class RegisterPage extends HBox {
 		this.getChildren().clear();
 	}
 	
-	protected abstract void onRegister();
+	protected abstract void onRegister(User user);
 	protected abstract void onCancel();
 
 	public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

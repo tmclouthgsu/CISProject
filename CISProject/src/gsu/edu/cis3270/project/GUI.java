@@ -60,8 +60,8 @@ public class GUI extends Application {
 			return registerpage;;
 		registerpage = new RegisterPage(){
 			@Override
-			protected void onRegister() {
-				onRegisterButtonClick();
+			protected void onRegister(User user) {
+				onRegisterButtonClick(user);
 			}
 			protected void onCancel() {
 				stage.setScene(getLoginScene());
@@ -70,7 +70,8 @@ public class GUI extends Application {
 		return registerpage;
 	}
 	
-	protected void onRegisterButtonClick(){
+	protected void onRegisterButtonClick(User user){
+		this.user = user;
 		stage.setScene(getHomeScene());
 	}
 	
@@ -91,17 +92,27 @@ public class GUI extends Application {
 		paneAddFlight = new AddFlightPane(this){
 			@Override
 			protected  void onBackButton()	{
-				onRegisterButtonClick();
+				onCancelButtonClick();
 			}
-			protected void onAddFlightButton() {
-				onAddFlightButtonClick();
+			protected void onAddFlightButton(Flight flight) {
+				onAddFlightButtonClick(flight);
 			}
 		};
 		return paneAddFlight;
 	}
 	
-	protected void onAddFlightButtonClick(){
-		stage.setScene(getHomeScene());
+	protected void onAddFlightButtonClick(Flight flight){
+		try {
+			db.insertFlightToDB(flight);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		paneAddFlight.clearScene();
+		paneAddFlight.init(this);
+		stage.setScene(getAddFlightScene());
+		
 	}
 	
 	

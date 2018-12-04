@@ -5,12 +5,12 @@ public class Flight {
 	private int flightNumber;
 	private String toCity;
 	private String fromCity;
-	private java.sql.Date departureTime;
-	private java.sql.Date arrivalTime;
+	private java.sql.Timestamp departureTime;
+	private java.sql.Timestamp arrivalTime;
 	private int passengers;
 
 	public Flight(int flightNumber, String toCity, String fromCity, 
-			java.sql.Date departureTime, java.sql.Date arrivalTime, int passengers){
+			java.sql.Timestamp departureTime, java.sql.Timestamp arrivalTime, int passengers){
 		
 		this.flightNumber = flightNumber;
 		this.toCity = toCity;
@@ -76,25 +76,25 @@ public class Flight {
 	/**
 	 * @return the departureTime
 	 */
-	public java.sql.Date getDepartureTime() {
+	public java.sql.Timestamp getDepartureTime() {
 		return departureTime;
 	}
 	/**
 	 * @param departureTime the departureTime to set
 	 */
-	public void setDepartureTime(java.sql.Date departureTime) {
+	public void setDepartureTime(java.sql.Timestamp departureTime) {
 		this.departureTime = departureTime;
 	}
 	/**
 	 * @return the arrivalTime
 	 */
-	public java.sql.Date getArrivalTime() {
+	public java.sql.Timestamp getArrivalTime() {
 		return arrivalTime;
 	}
 	/**
 	 * @param arrivalTime the arrivalTime to set
 	 */
-	public void setArrivalTime(java.sql.Date arrivalTime) {
+	public void setArrivalTime(java.sql.Timestamp arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 	/**
