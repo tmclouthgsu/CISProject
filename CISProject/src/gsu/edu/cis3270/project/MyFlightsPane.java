@@ -64,7 +64,7 @@ public abstract class MyFlightsPane extends VBox {
         cmdOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int row = table.getSelectionModel().getSelectedIndex();
-                System.out.println("Selected row => "+row);
+                //System.out.println("Selected row => "+row);
                 onFlightSelected(row);
             }
         });
