@@ -56,7 +56,7 @@ public abstract class MyFlightsPane extends VBox {
         colDate.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         table.getColumns().add(colDate);
 
-        colInt = new TableColumn<Flight, Integer>("Passenger Count");
+        colInt = new TableColumn<Flight, Integer>("Passengers");
         colInt.setCellValueFactory(new PropertyValueFactory<>("passengers"));
         table.getColumns().add(colInt);
         

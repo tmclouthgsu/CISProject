@@ -333,6 +333,36 @@ public class MySQLAccess {
 		}
     	return flightList;
     }
+	
+	public ArrayList<Flight> getAllFLights(){
+        
+		Connection connect = null;
+        Statement statement = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+    	
+    	ArrayList<Flight> flightList = new ArrayList<Flight>();
+    	
+    	try {
+    		
+    		connect = DriverManager
+    				.getConnection("jdbc:mysql://localhost/ProjectDB?"
+    						+ "user=root&password=password");
+    		preparedStatement = connect.prepareStatement("select * from ProjectDB.Flight");
+    		resultSet = preparedStatement.executeQuery();
+   		
+			if(resultSet.next()){
+				flightList = listFlights(resultSet);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(resultSet,connect,statement);
+		}
+    	return flightList;
+    }
 
     public void addUserToFlight(Flight flight, User user) throws Exception{
     	

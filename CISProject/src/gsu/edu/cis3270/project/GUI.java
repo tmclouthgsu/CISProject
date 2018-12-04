@@ -1,6 +1,9 @@
 package gsu.edu.cis3270.project;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -15,9 +18,12 @@ public class GUI extends Application {
 	
 	
 	private Stage stage = new Stage();
+	
+	private MySQLAccess db = new MySQLAccess();
 
 	public final int width = 1000;
 	public final int height = 1000;
+	public ArrayList<Flight> searchResults = db.getAllFLights();
 	
 	// Model ==================
 	protected User user;
@@ -133,7 +139,9 @@ public class GUI extends Application {
 		}
 	}
 	
+	
 //////////////////////////////////////////////////////////////////////////////////
+	
 	
 	public Scene getMyFlightsScene() {
 		if (sceneMyFlights == null) {
@@ -158,14 +166,93 @@ public class GUI extends Application {
 		return paneMyFlights;
 	}
 	
+	
 /////////////////////////////////////////////////////////////////////////////////
+	
+	
+	public Scene getSearchFlightScene() {
+		
+		if (sceneSearchFlight == null) {
+			sceneSearchFlight = new Scene(getSearchFlightPane(), width, height);
+		}
+		return sceneSearchFlight;
+	}
+	
+	public SearchFlightPane getSearchFlightPane() {
+		if (paneSearchFlight != null)
+			return paneSearchFlight;
+		paneSearchFlight = new SearchFlightPane(this) {
+			@Override
+			protected void onFlightSelected(int row) {
+			}
+			
+			@Override
+			protected void onSearch() {
+				onSearchButtonClick();
+			}
+			
+			@Override
+			protected void onCancel() {
+				//go to home screen
+			}
+		};
+		return paneSearchFlight;
+	}
+	
+	protected void onSearchButtonClick(){
+		
+		if((paneSearchFlight.getToCity().isEmpty()) && (paneSearchFlight.getFromCity().isEmpty())){
+			paneSearchFlight.showAlert(Alert.AlertType.ERROR, paneSearchFlight.grid.getScene().getWindow(), "Search Error!",
+							"Please enter some search criteria.");
+			return;
+		}
+		
+		if((!paneSearchFlight.getToCity().isEmpty()) && (!paneSearchFlight.getFromCity().isEmpty())){
+			paneSearchFlight.showAlert(Alert.AlertType.ERROR, paneSearchFlight.grid.getScene().getWindow(), "Search Error!",
+							"You cannot search by both criteria at the same time.");
+			return;
+		}
+		
+		if(!paneSearchFlight.getToCity().isEmpty()){
+			
+			try {
+				this.searchResults = db.searchByToCity(paneSearchFlight.getToCity());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			paneSearchFlight.clearScene();
+			paneSearchFlight.init(this);
+			stage.setScene(getSearchFlightScene());
+			
+		}
+		
+		if(!paneSearchFlight.getFromCity().isEmpty()){
+			
+			try {
+				this.searchResults = db.searchByFromCity(paneSearchFlight.getFromCity());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			paneSearchFlight.clearScene();
+			paneSearchFlight.init(this);
+			stage.setScene(getSearchFlightScene());
+			
+		}
+
+	}
+	
+	
+///////////////////////////////////////////////////////////////////////////////////
+	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
 		stage.setTitle("Book-A-Flight");
 
-		stage.setScene(getLoginScene());
+		stage.setScene(getSearchFlightScene());
 		stage.show();
 	}
 	

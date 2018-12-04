@@ -25,7 +25,7 @@ public abstract class LoginPage extends HBox{
 	public Button butRegister = new Button("Sign Up");
 	public TextField txtUserId = new TextField();
 	public PasswordField ptxtPassword = new PasswordField();
-	public GridPane gridPane = new GridPane();
+	public GridPane gridPane;
 
 	public LoginPage(){
 		init();
@@ -33,7 +33,7 @@ public abstract class LoginPage extends HBox{
 
 	public void init(){
 		
-		
+		gridPane = new GridPane();
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
 		gridPane.setHgap(10);

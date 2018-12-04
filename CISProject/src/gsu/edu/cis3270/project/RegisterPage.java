@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 public abstract class RegisterPage extends HBox {
 	
-	public GridPane gridPane = new GridPane();
+	public GridPane gridPane;
 	
 	public RegisterPage(){
 		init();
@@ -25,6 +25,7 @@ public abstract class RegisterPage extends HBox {
 	
 	public void init(){
 		
+		gridPane = new GridPane();
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setPadding(new Insets(40, 40, 40, 40));
 		gridPane.setHgap(10);
@@ -222,6 +223,10 @@ public abstract class RegisterPage extends HBox {
 		hbox.getChildren().add(gridPane);
 		this.getChildren().add(hbox);
 		
+	}
+	
+	public void clearScene(){
+		this.getChildren().clear();
 	}
 	
 	protected abstract void onRegister();
