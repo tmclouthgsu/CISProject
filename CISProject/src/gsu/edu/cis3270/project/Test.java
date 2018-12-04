@@ -32,7 +32,7 @@ public class Test {
         	System.out.println("get flights for user " + temp.getFromCity());
         }
         
-        dao.addUserToFlight(dao.getFlightFromDB(2683),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
+        dao.addUserToFlight(dao.getFlightFromDB(2683),dao.getUserFromDB("bob@tom.test"));
         
         //dao.removeUserFromFlight(dao.getFlightFromDB(3691),dao.getUserFromDB("Lev.Yashin@nowhere.com"));
         

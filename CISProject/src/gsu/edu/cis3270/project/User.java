@@ -55,11 +55,12 @@ public class User {
 		MySQLAccess userRegistration = new MySQLAccess();
 		
 		try {
-			if(userRegistration.getUserFromDB(registrant.getEmail()) == null){
+			
+			if(userRegistration.getUserFromDB(registrant.getEmail()) == null || userRegistration.getUserFromDB(registrant.getEmail()).getEmail() == ""){
 				userRegistration.insertUserToDB(registrant);
 			}
 			else{
-				System.out.println("This username already belongs to a registered user");
+				System.out.println("This username " + userRegistration.getUserFromDB(registrant.getEmail()).email + " already belongs to a registered user");
 			}
 
 		} catch (Exception e) {
