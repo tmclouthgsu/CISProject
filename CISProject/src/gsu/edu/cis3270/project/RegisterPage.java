@@ -134,7 +134,21 @@ public abstract class RegisterPage extends HBox {
 		TextField txtSercuirtyQuestionAnswer = new TextField();
 		txtSercuirtyQuestion.setPrefHeight(40);
 		gridPane.add(txtSercuirtyQuestionAnswer, 1, 10);
-
+		
+		
+        Button cancel = new Button("Back");
+		cancel.setPrefHeight(40);
+		cancel.setDefaultButton(true);
+		cancel.setPrefWidth(100);
+		gridPane.add(cancel, 0, 11, 2, 1);
+		GridPane.setHalignment(cancel, HPos.RIGHT);
+		GridPane.setMargin(cancel, new Insets(20, 0, 20, 0));
+        cancel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                onCancel();
+            }
+        });		
+		
 		// Button to call new user object
 		Button butRegister = new Button("Register");
 		butRegister.setPrefHeight(40);
@@ -230,6 +244,7 @@ public abstract class RegisterPage extends HBox {
 	}
 	
 	protected abstract void onRegister();
+	protected abstract void onCancel();
 
 	public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
 		Alert alert = new Alert(alertType);

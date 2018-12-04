@@ -21,8 +21,8 @@ public class GUI extends Application {
 	
 	private MySQLAccess db = new MySQLAccess();
 
-	public final int width = 1000;
-	public final int height = 1000;
+	public final int width = 600;
+	public final int height = 600;
 	public ArrayList<Flight> searchResults = db.getAllFLights();
 	
 	// Model ==================
@@ -68,12 +68,15 @@ public class GUI extends Application {
 			protected void onRegister() {
 				onRegisterButtonClick();
 			}
+			protected void onCancel() {
+				stage.setScene(getLoginScene());
+			}
 		};
 		return registerpage;
 	}
 	
 	protected void onRegisterButtonClick(){
-		System.out.println("we made it to registering a user");
+		stage.setScene(getHomeScene());
 	}
 	
 	
@@ -203,7 +206,7 @@ public class GUI extends Application {
 				"You are now longer on the selected flight");
 		
 		paneMyFlights.clearScene();
-		userFlights();
+		searchResults = db.getFlightsForUser(user);
 		paneMyFlights.init(this);
 		stage.setScene(getMyFlightsScene());
 	}
