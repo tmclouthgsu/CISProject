@@ -380,7 +380,6 @@ public class MySQLAccess {
     		for(User passenger : getPassengersForFlight(flight)){
     			if(user.getEmail().matches(passenger.getEmail())){
     				close(resultSet,connect,statement);
-    				System.out.println("You are already registered for this Flight");
     				return 0;
     			}
     		}

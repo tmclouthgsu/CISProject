@@ -110,7 +110,6 @@ public class GUI extends Application {
 			
 			User tempuser = login.getUserFromDB(username);	
 			if(tempuser.matchPassword(password)){
-				System.out.println("login passed");
 				user = login.getUserFromDB(username);
 				stage.setScene(getHomeScene());
 			}
