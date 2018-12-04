@@ -18,16 +18,13 @@ public class GUI extends Application {
 	
 	
 	private Stage stage = new Stage();
-	
 	private MySQLAccess db = new MySQLAccess();
-
 	public final int width = 600;
 	public final int height = 600;
-	public ArrayList<Flight> searchResults = db.getAllFLights();
 	
 	// Model ==================
 	protected User user;
-
+	public ArrayList<Flight> searchResults = db.getAllFLights();
 	
 	// View ===================
 	protected Scene sceneLogin;
