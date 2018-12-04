@@ -13,7 +13,7 @@ public class GUI extends Application {
 	
 	private Stage stage = new Stage();
 	private MySQLAccess db = new MySQLAccess();
-	public final int width = 800;
+	public final int width = 700;
 	public final int height = 600;
 	
 	// Model ==================
